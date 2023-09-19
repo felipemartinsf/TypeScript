@@ -74,7 +74,7 @@ export class App {
     if(isValid) console.log('Senha correta')
     else console.log('Senha incorreta')
     }
-     moveBikeTo(bikeId: string, location:location) {
+     moveBikeTo(bikeId: string, location:location) :void {
         const bike = this.bikes.find(bike => bike.id === bikeId)
         if(bike === undefined) throw new Error("This bike does not exist")
             bike.loc.latitude = location.latitude
