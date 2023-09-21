@@ -2,6 +2,8 @@ import { Bike } from "./bike";
 import { location } from "./location";
 import { Rent } from "./rent";
 import { User } from "./user";
+import { UserNotFoundError } from "./errors/user-error";
+import { BikeNotFound } from "./errors/notFound-bike-error";
 import {hash} from "bcrypt"
 import {compare } from "bcrypt"
 
@@ -11,7 +13,9 @@ export class App {
     rents: Rent[] = []
 
     findUser(email: string) { //retorna o usuário procurado
-        return this.users.find(user => user.email === email)
+        const user = this.users.find(user => user.email === email)
+        if (!user) throw new UserNotFoundError()
+        return user
     }
 
     async registerUser(user: User) { //registra um usuário no users e criptografa a senha
@@ -75,9 +79,13 @@ export class App {
     else console.log('Senha incorreta')
     }
      moveBikeTo(bikeId: string, location:location) :void {
+        const bike = this.findBike(bikeId)
+        bike.loc.latitude = location.latitude
+        bike.loc.longitude = location.longitude
+    }
+    findBike(bikeId: string): Bike {
         const bike = this.bikes.find(bike => bike.id === bikeId)
-        if(bike === undefined) throw new Error("This bike does not exist")
-            bike.loc.latitude = location.latitude
-            bike.loc.longitude = location.longitude
+        if (!bike) throw new BikeNotFound()
+        return bike
     }
 }

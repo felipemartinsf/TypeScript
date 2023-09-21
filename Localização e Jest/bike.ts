@@ -11,6 +11,6 @@ export class Bike {
         public imageUrls: string[],
         public available: boolean = true,
         public loc: location = new location(0,0),
-        public id: string = '1'
+        public id = '1'
     ) {}
 }
