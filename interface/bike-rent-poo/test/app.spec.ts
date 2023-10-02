@@ -10,7 +10,7 @@ import { DuplicateUserError } from "../src/errors/duplicate-user-error"
 import { FakeUserRepo } from "./doubles/fake-user-repo"
 import { FakeBikeRepo } from "./doubles/fake-bike-repo"
 import { FakeRentRepo } from "./doubles/fake-rent-repo"
-import { NonexistentBike } from "../src/errors/nonexistent-bike-error"
+import { RentNotFound } from "../src/errors/nonexistent-rent-error"
 
 let userRepo: FakeUserRepo
 let bikeRepo: FakeBikeRepo
@@ -130,6 +130,6 @@ describe('App', () => {
         1234, 1234, 100.0, 'My bike', 5, [])
         await app.registerBike(bike)
         await app.registerUser(user)
-        expect(app.returnBike('3',user.email)).rejects.toThrow(NonexistentBike)
+        expect(app.returnBike('3',user.email)).rejects.toThrow(RentNotFound)
     })
 })
